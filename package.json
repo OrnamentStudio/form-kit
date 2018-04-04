@@ -11,7 +11,9 @@
   "keywords": [
     "react",
     "form",
-    "input"
+    "input",
+    "select",
+    "checkbox"
   ],
   "author": "Abylay Keldibek <atomio.ak@gmail.com>",
   "license": "MIT",
