@@ -1,0 +1,22 @@
+{
+  "name": "reactform-kit",
+  "version": "0.0.0",
+  "description": "React Form Components",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OrnamentStudio/reactform-kit.git"
+  },
+  "keywords": [
+    "react",
+    "form",
+    "input"
+  ],
+  "author": "Abylay Keldibek <atomio.ak@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OrnamentStudio/reactform-kit/issues"
+  },
+  "homepage": "https://github.com/OrnamentStudio/reactform-kit#readme"
+}
