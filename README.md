@@ -3,4 +3,4 @@ React Form Components
 
 ## License
 
-MIT © Ablay Keldibek
+MIT © Abylay Keldibek
