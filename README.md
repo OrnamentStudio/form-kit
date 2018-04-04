@@ -1,4 +1,4 @@
-# reactform-kit
+# form-kit
 React Form Components
 
 ## License
