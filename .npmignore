@@ -1,0 +1,10 @@
+build/
+!lib/
+preview/
+.babelrc
+.eslintignore
+.eslintrc
+.gitignore
+.npmignore
+.stylintrc
+gulpfile.js
