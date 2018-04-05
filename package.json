@@ -2,8 +2,10 @@
   "name": "ornament-form-kit",
   "version": "0.0.0",
   "description": "React Form Components",
-  "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "NODE_ENV=production gulp lib:build",
+    "start": "gulp & node ./preview/server.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OrnamentStudio/reactform-kit.git"
@@ -20,5 +22,59 @@
   "bugs": {
     "url": "https://github.com/OrnamentStudio/reactform-kit/issues"
   },
-  "homepage": "https://github.com/OrnamentStudio/reactform-kit#readme"
+  "homepage": "https://github.com/OrnamentStudio/reactform-kit#readme",
+  "engines": {
+    "node": "^8.x.x"
+  },
+  "devDependencies": {
+    "eslint": "4.13.1",
+    "eslint-config-airbnb": "16.1.0",
+    "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-jsx-a11y": "6.0.3",
+    "eslint-plugin-react": "7.5.1",
+    "express": "4.16.3",
+    "livereload": "0.6.3",
+    "connect-livereload": "0.6.0",
+    "gulp": "3.9.1",
+    "gulp-watch": "5.0.0",
+    "gulp-babel": "7.0.1",
+    "run-sequence": "2.2.1",
+    "browserify": "16.1.0",
+    "browserify-incremental": "3.1.1",
+    "pump": "3.0.0",
+    "vinyl-source-stream": "2.0.0",
+    "del": "3.0.0",
+    "babel-core": "6.26.0",
+    "babelify": "8.0.0",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-react": "6.24.1",
+    "babel-plugin-transform-runtime": "6.23.0",
+    "babel-plugin-transform-node-env-inline": "0.3.0",
+    "babel-plugin-transform-react-constant-elements": "6.23.0",
+    "babel-plugin-transform-react-remove-prop-types": "0.4.13",
+    "babel-plugin-transform-react-jsx-self": "6.22.0",
+    "babel-plugin-transform-react-inline-elements": "6.22.0",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-plugin-syntax-trailing-function-commas": "6.22.0",
+    "prop-types": "15.6.0",
+    "react": "16.2.0",
+    "react-dom": "16.2.0",
+    "react-router-dom": "4.2.2"
+  },
+  "peerDependencies": {
+    "react": "^16.x.x",
+    "prop-types": "^15.6.x"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "extensions": [
+            ".es"
+          ]
+        }
+      ]
+    ]
+  }
 }
