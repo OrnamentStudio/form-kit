@@ -3,22 +3,11 @@ import PropTypes from 'prop-types';
 import wrapControl from '../control_wrapper';
 
 
-const TYPES = [
-  'text',
-  'password',
-  'date',
-  'datetime-local',
-  'email',
-  'month',
-  'number',
-  'search',
-  'tel',
-  'time',
-  'url',
-  'week',
-];
+const renderOption = ({ value, content }) => (
+  <option key={value} value={value}>{content}</option>
+);
 
-class Text extends PureComponent {
+class Select extends PureComponent {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -31,28 +20,31 @@ class Text extends PureComponent {
   }
 
   render() {
-    const { control, type, ...cleanProps } = this.props;
+    const { control, options, ...cleanProps } = this.props;
     const { field, value } = control;
 
+    const content = options.map(renderOption);
+
     return (
-      <input
+      <select
         {...cleanProps}
-        type={type}
         value={value}
         name={field}
         onChange={this.handleChange}
-      />
+      >
+        {content}
+      </select>
     );
   }
 }
 
-Text.defaultProps = {
-  type: 'text',
+Select.defaultProps = {
+  options: [],
 };
 
-Text.propTypes = {
-  type: PropTypes.oneOf(TYPES).isRequired,
+Select.propTypes = {
+  options: PropTypes.array.isRequired,
   control: PropTypes.object.isRequired,
 };
 
-export default wrapControl(Text);
+export default wrapControl(Select);

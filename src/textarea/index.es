@@ -3,22 +3,7 @@ import PropTypes from 'prop-types';
 import wrapControl from '../control_wrapper';
 
 
-const TYPES = [
-  'text',
-  'password',
-  'date',
-  'datetime-local',
-  'email',
-  'month',
-  'number',
-  'search',
-  'tel',
-  'time',
-  'url',
-  'week',
-];
-
-class Text extends PureComponent {
+class Textarea extends PureComponent {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -31,13 +16,12 @@ class Text extends PureComponent {
   }
 
   render() {
-    const { control, type, ...cleanProps } = this.props;
+    const { control, ...cleanProps } = this.props;
     const { field, value } = control;
 
     return (
-      <input
+      <textarea
         {...cleanProps}
-        type={type}
         value={value}
         name={field}
         onChange={this.handleChange}
@@ -46,13 +30,8 @@ class Text extends PureComponent {
   }
 }
 
-Text.defaultProps = {
-  type: 'text',
-};
-
-Text.propTypes = {
-  type: PropTypes.oneOf(TYPES).isRequired,
+Textarea.propTypes = {
   control: PropTypes.object.isRequired,
 };
 
-export default wrapControl(Text);
+export default wrapControl(Textarea);
