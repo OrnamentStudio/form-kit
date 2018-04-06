@@ -12,30 +12,27 @@ class Text extends PureComponent {
   handleChange(event) {
     const { control } = this.props;
     const { value } = event.target;
-
-    control.setValue(value);
+    control.update(value);
   }
 
   render() {
     const { control, ...cleanProps } = this.props;
+    const { field, value } = control;
 
     return (
       <input
         {...cleanProps}
         type="text"
-        name={control.name}
+        value={value}
+        name={field}
         onChange={this.handleChange}
-        value={control.value}
       />
     );
   }
 }
 
 Text.propTypes = {
-  control: PropTypes.shape({
-    value: PropTypes.any,
-    setValue: PropTypes.func.isRequired,
-  }).isRequired,
+  control: PropTypes.object.isRequired,
 };
 
 export default wrapControl(Text);

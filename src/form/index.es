@@ -7,53 +7,42 @@ import { Provider } from '../form_context';
 class Form extends PureComponent {
   constructor(props) {
     super(props);
-    this.controls = [];
-    this.state = {
-      addControl: this.addControl.bind(this),
-      removeControl: this.removeControl.bind(this),
-    };
-
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.state = {
+      updateField: this.updateField.bind(this),
+      model: props.defaultModel,
+    };
   }
 
-  getModel() {
-    const grap = (acc, control) => ({
-      ...acc,
-      [control.getName()]: control.getValue(),
-    });
-
-    return this.controls.reduce(grap, {});
+  updateField(field, value) {
+    const model = { ...this.state.model, [field]: value };
+    this.setState({ model });
   }
-
-  addControl(instance) {
-    if (this.controls.includes(instance)) return;
-    this.controls.push(instance);
-  }
-
-  removeControl(instance) {
-    this.controls = this.controls.filter((control) => control !== instance);
-  }
-
 
   handleSubmit(event) {
     event.preventDefault();
-    const model = this.getModel();
-    console.warn('SUBMIT', model);
+    console.warn(this.state.model);
   }
 
   render() {
-    const { children, ...cleanProps } = this.props;
+    const { children, defaultModel, ...cleanProps } = this.props;
 
     return (
       <form {...cleanProps} onSubmit={this.handleSubmit}>
-        <Provider value={this.state}>{children}</Provider>
+        <Provider value={this.state}>{children(this.state)}</Provider>
       </form>
     );
   }
 }
 
+Form.defaultProps = {
+  defaultModel: {},
+};
+
 Form.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.func.isRequired,
+  defaultModel: PropTypes.object.isRequired,
 };
 
 export default Form;
