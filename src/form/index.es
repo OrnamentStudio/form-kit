@@ -2,9 +2,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from '../form_context';
+import { getErrors, hasErrors, invoke, shouldStateUpdate } from './utils';
 
 
 class Form extends PureComponent {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!shouldStateUpdate(nextProps, prevState)) return null;
+    return { errors: nextProps.errors };
+  }
+
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -12,6 +18,7 @@ class Form extends PureComponent {
     this.state = {
       updateField: this.updateField.bind(this),
       model: props.defaultModel,
+      errors: {},
     };
   }
 
@@ -22,15 +29,38 @@ class Form extends PureComponent {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.warn(this.state.model);
+
+    const { validation, onSubmit, onValidSubmit, onInvalidSubmit } = this.props;
+    const { model } = this.state;
+    const errors = getErrors(model, validation);
+
+    this.setState({ errors });
+
+    invoke(onSubmit, event);
+    if (hasErrors(errors)) invoke(onInvalidSubmit);
+    else invoke(onValidSubmit, model);
   }
 
   render() {
-    const { children, defaultModel, ...cleanProps } = this.props;
+    const {
+      children,
+
+      defaultModel,
+      errors,
+      validation,
+
+      onSubmit,
+      onValidSubmit,
+      onInvalidSubmit,
+
+      ...cleanProps
+    } = this.props;
+
+    const content = typeof children === 'function' ? children(this.state) : children;
 
     return (
       <form {...cleanProps} onSubmit={this.handleSubmit}>
-        <Provider value={this.state}>{children(this.state)}</Provider>
+        <Provider value={this.state}>{content}</Provider>
       </form>
     );
   }
@@ -38,11 +68,22 @@ class Form extends PureComponent {
 
 Form.defaultProps = {
   defaultModel: {},
+  validation: {},
 };
 
 Form.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.node,
+  ]),
+
   defaultModel: PropTypes.object.isRequired,
+  errors: PropTypes.object,
+  validation: PropTypes.object.isRequired,
+
+  onSubmit: PropTypes.func,
+  onValidSubmit: PropTypes.func,
+  onInvalidSubmit: PropTypes.func,
 };
 
 export default Form;
