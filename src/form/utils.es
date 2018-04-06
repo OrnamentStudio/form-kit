@@ -22,3 +22,8 @@ export const getErrors = (model, validation) => {
 export const hasErrors = (errors) => Boolean(errors && Object.keys(errors).length);
 
 export const invoke = (func, ...args) => { if (func) func(...args); };
+
+export const shouldStateUpdate = (nextProps, prevState) => (
+  nextProps.errors &&
+  prevState.errors !== nextProps.errors
+);

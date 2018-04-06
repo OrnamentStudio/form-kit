@@ -1,14 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+
 import connect from '../form_connect';
+import { shouldStateUpdate, DEFAULT_VALUE } from './utils';
 
-
-const DEFAULT_VALUE = '';
-
-const shouldStateUpdate = (nextProps, prevState) => (
-  nextProps.form !== prevState.form ||
-  nextProps.field !== prevState.field
-);
 
 export default (Component) => {
   class Control extends PureComponent {

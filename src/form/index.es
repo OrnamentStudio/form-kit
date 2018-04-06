@@ -2,10 +2,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from '../form_context';
-import { getErrors, hasErrors, invoke } from './utils';
+import { getErrors, hasErrors, invoke, shouldStateUpdate } from './utils';
 
 
 class Form extends PureComponent {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!shouldStateUpdate(nextProps, prevState)) return null;
+    return { errors: nextProps.errors };
+  }
+
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,7 +44,9 @@ class Form extends PureComponent {
   render() {
     const {
       children,
+
       defaultModel,
+      errors,
       validation,
 
       onSubmit,
@@ -49,9 +56,11 @@ class Form extends PureComponent {
       ...cleanProps
     } = this.props;
 
+    const content = typeof children === 'function' ? children(this.state) : children;
+
     return (
       <form {...cleanProps} onSubmit={this.handleSubmit}>
-        <Provider value={this.state}>{children(this.state)}</Provider>
+        <Provider value={this.state}>{content}</Provider>
       </form>
     );
   }
@@ -63,8 +72,13 @@ Form.defaultProps = {
 };
 
 Form.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.node,
+  ]),
+
   defaultModel: PropTypes.object.isRequired,
+  errors: PropTypes.object,
   validation: PropTypes.object.isRequired,
 
   onSubmit: PropTypes.func,
