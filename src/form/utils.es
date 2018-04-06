@@ -9,9 +9,11 @@ export const getErrors = (model, validation) => {
     const value = model[key];
     const { message, validate, required } = validation[key];
 
+    const hasValue = !isEmpty(value);
     let hasError = false;
-    if (required && isEmpty(value)) hasError = true;
-    if (!hasError) hasError = validate.some((check) => !check(value));
+
+    if (required && !hasValue) hasError = true;
+    if (!hasError && hasValue && validate) hasError = validate.some((check) => !check(value));
 
     return hasError ? { ...acc, [key]: message } : acc;
   };
