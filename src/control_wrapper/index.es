@@ -5,22 +5,22 @@ import connect from '../form_connect';
 
 const DEFAULT_VALUE = '';
 
-const isStateChanged = (nextProps, prevState) => (
+const shouldStateUpdate = (nextProps, prevState) => (
   nextProps.form !== prevState.form ||
-  nextProps.value !== prevState.value ||
   nextProps.field !== prevState.field
 );
 
 export default (Component) => {
   class Control extends PureComponent {
     static getDerivedStateFromProps(nextProps, prevState) {
-      if (!isStateChanged(nextProps, prevState)) return null;
+      if (!shouldStateUpdate(nextProps, prevState)) return null;
 
       const { form, field } = nextProps;
       const value = form.model[field] || DEFAULT_VALUE;
+      const error = form.errors[field];
       const update = (newValue) => form.updateField(nextProps.field, newValue);
 
-      return { form, field, value, update };
+      return { form, field, value, error, update };
     }
 
     constructor(props) {

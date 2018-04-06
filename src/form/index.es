@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from '../form_context';
+import { getErrors, hasErrors, invoke } from './utils';
 
 
 class Form extends PureComponent {
@@ -12,6 +13,7 @@ class Form extends PureComponent {
     this.state = {
       updateField: this.updateField.bind(this),
       model: props.defaultModel,
+      errors: {},
     };
   }
 
@@ -22,11 +24,30 @@ class Form extends PureComponent {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.warn(this.state.model);
+
+    const { validation, onSubmit, onValidSubmit, onInvalidSubmit } = this.props;
+    const { model } = this.state;
+    const errors = getErrors(model, validation);
+
+    this.setState({ errors });
+
+    invoke(onSubmit, event);
+    if (hasErrors(errors)) invoke(onInvalidSubmit);
+    else invoke(onValidSubmit, model);
   }
 
   render() {
-    const { children, defaultModel, ...cleanProps } = this.props;
+    const {
+      children,
+      defaultModel,
+      validation,
+
+      onSubmit,
+      onValidSubmit,
+      onInvalidSubmit,
+
+      ...cleanProps
+    } = this.props;
 
     return (
       <form {...cleanProps} onSubmit={this.handleSubmit}>
@@ -38,11 +59,17 @@ class Form extends PureComponent {
 
 Form.defaultProps = {
   defaultModel: {},
+  validation: {},
 };
 
 Form.propTypes = {
   children: PropTypes.func.isRequired,
   defaultModel: PropTypes.object.isRequired,
+  validation: PropTypes.object.isRequired,
+
+  onSubmit: PropTypes.func,
+  onValidSubmit: PropTypes.func,
+  onInvalidSubmit: PropTypes.func,
 };
 
 export default Form;
