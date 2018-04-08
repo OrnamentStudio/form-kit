@@ -8,7 +8,10 @@ import { getErrors, hasErrors, invoke, shouldStateUpdate } from './utils';
 class Form extends PureComponent {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (!shouldStateUpdate(nextProps, prevState)) return null;
-    return { errors: nextProps.errors };
+
+    const update = { locked: nextProps.locked };
+    if (nextProps.errors) update.errors = nextProps.errors;
+    return update;
   }
 
   constructor(props) {
@@ -17,18 +20,23 @@ class Form extends PureComponent {
 
     this.state = {
       updateField: this.updateField.bind(this),
+      locked: props.locked,
       model: props.defaultModel,
       errors: {},
     };
   }
 
   updateField(field, value) {
+    if (this.state.locked) return;
+
     const model = { ...this.state.model, [field]: value };
     this.setState({ model });
   }
 
   handleSubmit(event) {
     event.preventDefault();
+
+    if (this.state.locked) return;
 
     const { validation, onSubmit, onValidSubmit, onInvalidSubmit } = this.props;
     const { model } = this.state;
@@ -45,6 +53,7 @@ class Form extends PureComponent {
     const {
       children,
 
+      locked,
       defaultModel,
       errors,
       validation,
@@ -67,6 +76,7 @@ class Form extends PureComponent {
 }
 
 Form.defaultProps = {
+  locked: false,
   defaultModel: {},
   validation: {},
 };
@@ -77,6 +87,7 @@ Form.propTypes = {
     PropTypes.node,
   ]),
 
+  locked: PropTypes.bool.isRequired,
   defaultModel: PropTypes.object.isRequired,
   errors: PropTypes.object,
   validation: PropTypes.object.isRequired,

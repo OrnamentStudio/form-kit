@@ -26,6 +26,6 @@ export const hasErrors = (errors) => Boolean(errors && Object.keys(errors).lengt
 export const invoke = (func, ...args) => { if (func) func(...args); };
 
 export const shouldStateUpdate = (nextProps, prevState) => (
-  nextProps.errors &&
-  prevState.errors !== nextProps.errors
+  (nextProps.errors && prevState.errors !== nextProps.errors) ||
+  prevState.locked !== nextProps.locked
 );
