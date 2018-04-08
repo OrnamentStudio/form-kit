@@ -1,8 +1,9 @@
 {
   "name": "ornament-form-kit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "React Form Components",
   "scripts": {
+    "prepublishOnly": "npm run build",
     "build": "NODE_ENV=production gulp lib:build",
     "start": "gulp & node ./preview/server.js"
   },

@@ -53,8 +53,9 @@ const handleSubmit = (event) => console.warn('Native Event', event);
 class Home extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = { customErrors: null };
+    this.state = { customErrors: null, isLocked: true };
     this.setCustomErrors = this.setCustomErrors.bind(this);
+    this.toggleLock = this.toggleLock.bind(this);
   }
 
   setCustomErrors() {
@@ -66,8 +67,13 @@ class Home extends PureComponent {
     });
   }
 
+  toggleLock() {
+    const update = ({ isLocked }) => ({ isLocked: !isLocked });
+    this.setState(update);
+  }
+
   render() {
-    const { customErrors } = this.state;
+    const { customErrors, isLocked } = this.state;
 
     const personForm = (
       <Fragment>
@@ -90,12 +96,18 @@ class Home extends PureComponent {
             {personForm}
           </Form>
         </section>
+
+        <hr />
+
         <section>
           <h2>Prefilled Data</h2>
           <Form defaultModel={defaultModel} onValidSubmit={handleValidSubmit}>
             {personForm}
           </Form>
         </section>
+
+        <hr />
+
         <section>
           <h2>Form with validation</h2>
           <Form
@@ -122,6 +134,33 @@ class Home extends PureComponent {
                 <p>
                   <button type="submit">Submit</button>
                   <button type="button" onClick={this.setCustomErrors}>Set Custom errors</button>
+                </p>
+              </Fragment>
+            )}
+          </Form>
+        </section>
+
+        <hr />
+
+        <section>
+          <h2>Locked Form</h2>
+          <Form
+            locked={isLocked}
+            onSubmit={handleSubmit}
+            onValidSubmit={handleValidSubmit}
+            onInvalidSubmit={handleInvalidSubmit}
+          >
+            {({ locked }) => (
+              <Fragment>
+                <p>{locked ? 'Locked' : 'Unlocked'}</p>
+                <p><Text field="text" /></p>
+                <p><Textarea field="textarea" /></p>
+                <p><Select field="select" options={sexOptions} /></p>
+                <p><RadioGroup field="radio_group" options={ageOptions} /></p>
+                <p><Checkbox field="checkbox" /></p>
+                <p>
+                  <button type="submit">Submit</button>
+                  <button type="button" onClick={this.toggleLock}>Toggle Lock</button>
                 </p>
               </Fragment>
             )}

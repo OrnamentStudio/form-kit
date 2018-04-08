@@ -1,6 +1,7 @@
 build/
 !lib/
 preview/
+src/
 .babelrc
 .eslintignore
 .eslintrc
