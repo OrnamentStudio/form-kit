@@ -30,9 +30,9 @@
   "devDependencies": {
     "eslint": "4.19.1",
     "eslint-config-airbnb": "16.1.0",
-    "eslint-plugin-import": "2.10.0",
+    "eslint-plugin-import": "2.12.0",
     "eslint-plugin-jsx-a11y": "6.0.3",
-    "eslint-plugin-react": "7.7.0",
+    "eslint-plugin-react": "7.9.1",
     "express": "4.16.3",
     "livereload": "0.7.0",
     "connect-livereload": "0.6.0",
@@ -40,17 +40,17 @@
     "gulp-watch": "5.0.0",
     "gulp-babel": "7.0.1",
     "run-sequence": "2.2.1",
-    "browserify": "16.2.0",
+    "browserify": "16.2.2",
     "browserify-incremental": "3.1.1",
     "pump": "3.0.0",
     "vinyl-source-stream": "2.0.0",
     "del": "3.0.0",
-    "babel-core": "6.26.0",
+    "babel-core": "6.26.3",
     "babelify": "8.0.0",
-    "babel-preset-env": "1.6.1",
+    "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
     "babel-plugin-transform-runtime": "6.23.0",
-    "babel-plugin-transform-node-env-inline": "0.4.0",
+    "babel-plugin-transform-node-env-inline": "0.4.3",
     "babel-plugin-transform-react-constant-elements": "6.23.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.13",
     "babel-plugin-transform-react-jsx-self": "6.22.0",
@@ -58,13 +58,15 @@
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-plugin-syntax-trailing-function-commas": "6.22.0",
     "prop-types": "15.6.1",
-    "react": "16.3.1",
-    "react-dom": "16.3.1",
-    "react-router-dom": "4.2.2"
+    "react": "16.4.1",
+    "react-dom": "16.4.1",
+    "react-router-dom": "4.3.1",
+    "memoize-one": "3.1.1"
   },
   "peerDependencies": {
-    "react": "^16.3.x",
-    "prop-types": "^15.6.x"
+    "react": "^16.4.x",
+    "prop-types": "^15.6.x",
+    "memoize-one": "^3.1.x"
   },
   "browserify": {
     "transform": [
