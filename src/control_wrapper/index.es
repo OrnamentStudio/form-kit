@@ -1,31 +1,38 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
+import memoize from 'memoize-one';
 import connect from '../form_connect';
-import { shouldStateUpdate, DEFAULT_VALUE } from './utils';
+
+const DEFAULT_VALUE = '';
 
 
 export default (Component) => {
   class Control extends PureComponent {
-    static getDerivedStateFromProps(nextProps, prevState) {
-      if (!shouldStateUpdate(nextProps, prevState)) return null;
-
-      const { form, field } = nextProps;
-      const value = form.model[field] || DEFAULT_VALUE;
-      const error = form.errors[field];
-      const update = (newValue) => form.updateField(nextProps.field, newValue);
-
-      return { form, field, value, error, update };
-    }
-
     constructor(props) {
       super(props);
-      this.state = {};
+      this.getAPI = memoize(this.getAPI);
+    }
+
+    getAPI(form, field) {
+      const value = form.model[field] || DEFAULT_VALUE;
+      const error = form.errors[field];
+      const update = (newValue) => form.updateField(field, newValue);
+
+      return {
+        form,
+        field,
+
+        value,
+        error,
+        update,
+      };
     }
 
     render() {
       const { field, form, ...cleanProps } = this.props;
-      return <Component {...cleanProps} control={this.state} />;
+      const api = this.getAPI(form, field);
+
+      return <Component {...cleanProps} control={api} />;
     }
   }
 

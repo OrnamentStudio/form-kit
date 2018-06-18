@@ -1,33 +1,39 @@
-/* eslint-disable react/no-unused-state */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import memoize from 'memoize-one';
 import { Provider } from '../form_context';
-import { getErrors, hasErrors, invoke, shouldStateUpdate } from './utils';
+import { getErrors, hasErrors, invoke } from './utils';
 
 
 class Form extends PureComponent {
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (!shouldStateUpdate(nextProps, prevState)) return null;
-
-    const update = { locked: nextProps.locked };
-    if (nextProps.errors) update.errors = nextProps.errors;
-    return update;
-  }
-
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
-      updateField: this.updateField.bind(this),
-      locked: props.locked,
       model: props.defaultModel,
       errors: {},
     };
+
+    this.getAPI = memoize(this.getAPI);
+    this.updateField = this.updateField.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  getAPI(model, errors, locked) {
+    return {
+      locked,
+      model,
+      errors,
+      updateField: this.updateField,
+    };
+  }
+
+  setErrors(errors) {
+    this.setState({ errors });
   }
 
   updateField(field, value) {
-    if (this.state.locked) return;
+    if (this.props.locked) return;
 
     const model = { ...this.state.model, [field]: value };
     this.setState({ model });
@@ -36,13 +42,20 @@ class Form extends PureComponent {
   handleSubmit(event) {
     event.preventDefault();
 
-    if (this.state.locked) return;
+    const {
+      locked,
+      validation,
+      onSubmit,
+      onValidSubmit,
+      onInvalidSubmit,
+    } = this.props;
 
-    const { validation, onSubmit, onValidSubmit, onInvalidSubmit } = this.props;
+    if (locked) return;
+
     const { model } = this.state;
     const errors = getErrors(model, validation);
 
-    this.setState({ errors });
+    this.setErrors(errors);
 
     invoke(onSubmit, event);
     if (hasErrors(errors)) invoke(onInvalidSubmit);
@@ -55,7 +68,6 @@ class Form extends PureComponent {
 
       locked,
       defaultModel,
-      errors,
       validation,
 
       onSubmit,
@@ -65,11 +77,17 @@ class Form extends PureComponent {
       ...cleanProps
     } = this.props;
 
-    const content = typeof children === 'function' ? children(this.state) : children;
+    const {
+      model,
+      errors,
+    } = this.state;
+
+    const api = this.getAPI(model, errors, locked);
+    const content = typeof children === 'function' ? children(api) : children;
 
     return (
       <form {...cleanProps} onSubmit={this.handleSubmit}>
-        <Provider value={this.state}>{content}</Provider>
+        <Provider value={api}>{content}</Provider>
       </form>
     );
   }
@@ -89,7 +107,6 @@ Form.propTypes = {
 
   locked: PropTypes.bool.isRequired,
   defaultModel: PropTypes.object.isRequired,
-  errors: PropTypes.object,
   validation: PropTypes.object.isRequired,
 
   onSubmit: PropTypes.func,

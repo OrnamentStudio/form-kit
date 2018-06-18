@@ -13,7 +13,11 @@ export const getErrors = (model, validation) => {
     let hasError = false;
 
     if (required && !hasValue) hasError = true;
-    if (!hasError && hasValue && validate) hasError = validate.some((check) => !check(value));
+
+    if (!hasError && hasValue && validate) {
+      const iterator = (check) => !check(value, model);
+      hasError = validate.some(iterator);
+    }
 
     return hasError ? { ...acc, [key]: message } : acc;
   };
@@ -24,8 +28,3 @@ export const getErrors = (model, validation) => {
 export const hasErrors = (errors) => Boolean(errors && Object.keys(errors).length);
 
 export const invoke = (func, ...args) => { if (func) func(...args); };
-
-export const shouldStateUpdate = (nextProps, prevState) => (
-  (nextProps.errors && prevState.errors !== nextProps.errors) ||
-  prevState.locked !== nextProps.locked
-);
