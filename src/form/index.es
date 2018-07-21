@@ -33,10 +33,11 @@ class Form extends PureComponent {
   }
 
   updateField(field, value) {
-    if (this.props.locked) return;
+    const { locked } = this.props;
+    if (locked) return;
 
-    const model = { ...this.state.model, [field]: value };
-    this.setState({ model });
+    const update = ({ model }) => ({ model: { ...model, [field]: value } });
+    this.setState(update);
   }
 
   handleSubmit(event) {
@@ -87,7 +88,9 @@ class Form extends PureComponent {
 
     return (
       <form {...cleanProps} onSubmit={this.handleSubmit}>
-        <Provider value={api}>{content}</Provider>
+        <Provider value={api}>
+          {content}
+        </Provider>
       </form>
     );
   }

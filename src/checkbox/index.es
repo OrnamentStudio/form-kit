@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import wrapControl from '../control_wrapper';
+import connect from '../form_connect';
+import { getValue } from '../form/utils';
 
 
 class Checkbox extends PureComponent {
@@ -10,14 +11,14 @@ class Checkbox extends PureComponent {
   }
 
   handleChange(event) {
-    const { control } = this.props;
+    const { form, field } = this.props;
     const { checked } = event.target;
-    control.update(checked);
+    form.updateField(field, checked);
   }
 
   render() {
-    const { control, ...cleanProps } = this.props;
-    const { field, value } = control;
+    const { form, field, ...cleanProps } = this.props;
+    const value = getValue(form, field, false);
 
     return (
       <input
@@ -32,7 +33,8 @@ class Checkbox extends PureComponent {
 }
 
 Checkbox.propTypes = {
-  control: PropTypes.object.isRequired,
+  form: PropTypes.object.isRequired,
+  field: PropTypes.string.isRequired,
 };
 
-export default wrapControl(Checkbox);
+export default connect(Checkbox);

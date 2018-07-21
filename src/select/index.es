@@ -1,10 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import wrapControl from '../control_wrapper';
+import connect from '../form_connect';
+import { getValue } from '../form/utils';
 
 
 const renderOption = ({ value, content }) => (
-  <option key={value} value={value}>{content}</option>
+  <option key={value} value={value}>
+    {content}
+  </option>
 );
 
 class Select extends PureComponent {
@@ -14,14 +17,14 @@ class Select extends PureComponent {
   }
 
   handleChange(event) {
-    const { control } = this.props;
+    const { form, field } = this.props;
     const { value } = event.target;
-    control.update(value);
+    form.updateField(field, value);
   }
 
   render() {
-    const { control, options, ...cleanProps } = this.props;
-    const { field, value } = control;
+    const { form, field, options, ...cleanProps } = this.props;
+    const value = getValue(form, field);
 
     const content = options.map(renderOption);
 
@@ -44,7 +47,8 @@ Select.defaultProps = {
 
 Select.propTypes = {
   options: PropTypes.array.isRequired,
-  control: PropTypes.object.isRequired,
+  form: PropTypes.object.isRequired,
+  field: PropTypes.string.isRequired,
 };
 
-export default wrapControl(Select);
+export default connect(Select);

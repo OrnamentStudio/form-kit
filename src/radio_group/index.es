@@ -1,6 +1,7 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import wrapControl from '../control_wrapper';
+import connect from '../form_connect';
+import { getValue } from '../form/utils';
 
 
 class RadioGroup extends PureComponent {
@@ -10,13 +11,14 @@ class RadioGroup extends PureComponent {
   }
 
   handleChange(value) {
-    const { control } = this.props;
-    control.update(value);
+    const { form, field } = this.props;
+    form.updateField(field, value);
   }
 
   renderOption({ value, content }) {
     const {
-      control,
+      form,
+      field,
       options,
 
       itemClassName,
@@ -30,20 +32,20 @@ class RadioGroup extends PureComponent {
         <input
           {...cleanProps}
           type="radio"
-          checked={value === control.value}
-          name={control.field}
+          checked={value === getValue(form, field)}
+          name={field}
           onChange={this.handleChange.bind(this, value)}
         />
-        <span className={contentClassName}>{content}</span>
+        <span className={contentClassName}>
+          {content}
+        </span>
       </span>
     );
   }
 
   render() {
     const { options } = this.props;
-    const content = options.map(this.renderOption);
-
-    return <Fragment>{content}</Fragment>;
+    return options.map(this.renderOption);
   }
 }
 
@@ -53,10 +55,12 @@ RadioGroup.defaultProps = {
 
 RadioGroup.propTypes = {
   options: PropTypes.array.isRequired,
-  control: PropTypes.object.isRequired,
+
+  form: PropTypes.object.isRequired,
+  field: PropTypes.string.isRequired,
 
   itemClassName: PropTypes.string,
   contentClassName: PropTypes.string,
 };
 
-export default wrapControl(RadioGroup);
+export default connect(RadioGroup);
