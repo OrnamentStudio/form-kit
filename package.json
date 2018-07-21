@@ -3,6 +3,7 @@
   "version": "0.4.0",
   "description": "React Form Components",
   "scripts": {
+    "lint": "eslint --ext .es,.js --ignore-path .eslintignore --format codeframe ./",
     "prepublishOnly": "npm run build",
     "build": "NODE_ENV=production gulp lib:build",
     "start": "gulp & node ./preview/server.js",
