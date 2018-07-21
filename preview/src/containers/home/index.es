@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent, Fragment, createRef } from 'react';
 import Form from '../../../../lib/form';
 import Text from '../../../../lib/text';
 import Textarea from '../../../../lib/textarea';
@@ -55,6 +55,15 @@ class Home extends PureComponent {
     super(props);
     this.state = { isLocked: true };
     this.toggleLock = this.toggleLock.bind(this);
+    this.setCustomErrors = this.setCustomErrors.bind(this);
+    this.errorForm = createRef();
+  }
+
+  setCustomErrors() {
+    this.errorForm.current.setErrors({
+      firstname: 'Error Custom',
+      about: 'Error Custom',
+    });
   }
 
   toggleLock() {
@@ -105,6 +114,7 @@ class Home extends PureComponent {
             onSubmit={handleSubmit}
             onValidSubmit={handleValidSubmit}
             onInvalidSubmit={handleInvalidSubmit}
+            ref={this.errorForm}
           >
             {({ errors }) => (
               <Fragment>

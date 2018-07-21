@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import wrapControl from '../control_wrapper';
+import connect from '../form_connect';
+import { getValue } from '../form/utils';
 
 
 class Textarea extends PureComponent {
@@ -10,14 +11,14 @@ class Textarea extends PureComponent {
   }
 
   handleChange(event) {
-    const { control } = this.props;
+    const { form, field } = this.props;
     const { value } = event.target;
-    control.update(value);
+    form.updateField(field, value);
   }
 
   render() {
-    const { control, ...cleanProps } = this.props;
-    const { field, value } = control;
+    const { form, field, ...cleanProps } = this.props;
+    const value = getValue(form, field);
 
     return (
       <textarea
@@ -31,7 +32,8 @@ class Textarea extends PureComponent {
 }
 
 Textarea.propTypes = {
-  control: PropTypes.object.isRequired,
+  form: PropTypes.object.isRequired,
+  field: PropTypes.string.isRequired,
 };
 
-export default wrapControl(Textarea);
+export default connect(Textarea);
