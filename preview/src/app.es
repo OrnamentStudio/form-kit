@@ -1,10 +1,10 @@
 import React, { PureComponent, Fragment, createRef } from 'react';
-import Form from '../../../../lib/form';
-import Text from '../../../../lib/text';
-import Textarea from '../../../../lib/textarea';
-import Select from '../../../../lib/select';
-import Checkbox from '../../../../lib/checkbox';
-import RadioGroup from '../../../../lib/radio_group';
+import Form from '../../lib/form';
+import Text from '../../lib/text';
+import Textarea from '../../lib/textarea';
+import Select from '../../lib/select';
+import Checkbox from '../../lib/checkbox';
+import RadioGroup from '../../lib/radio_group';
 
 
 const defaultModel = {
@@ -50,7 +50,7 @@ const handleValidSubmit = (model) => console.warn('Submit Success!', model);
 const handleInvalidSubmit = () => console.error('Submit Error!');
 const handleSubmit = (event) => console.warn('Native Event', event);
 
-class Home extends PureComponent {
+class App extends PureComponent {
   constructor(props) {
     super(props);
     this.state = { isLocked: true };
@@ -170,4 +170,4 @@ class Home extends PureComponent {
   }
 }
 
-export default Home;
+export default App;

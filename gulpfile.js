@@ -1,69 +1,33 @@
 const gulp = require('gulp');
-const del = require('del');
-const sequence = require('run-sequence');
-const watch = require('gulp-watch');
-
-const babel = require('./build/babel');
-const bundle = require('./build/bundle');
+const browserify = require('browserify');
+const { createWriteStream, mkdirSync, appendFileSync, existsSync } = require('fs');
 
 
-const pathNormalize = (path) => (path.replace(`${__dirname}/../`, ''));
-const triggerTaskAction = (task) => (
-  (event) => {
-    console.info(`File ${pathNormalize(event.path)} was changed`);
-    gulp.start(task);
-  }
-);
+const bundle = (done) => {
+  const destDir = `${__dirname}/preview/assets`;
+  const destFile = `${destDir}/app.js`;
 
-// Lib Tasks
+  if (!existsSync(destDir)) mkdirSync(destDir);
+  appendFileSync(destFile);
 
-gulp.task('lib:clean', () => del([`${__dirname}/lib`]));
+  const destStream = createWriteStream(destFile);
 
-gulp.task('lib:compile', (done) => {
-  babel({
-    src: `${__dirname}/src/**/*.es`,
-    dest: `${__dirname}/lib`,
-  }, done);
-});
+  const instance = browserify({
+    entries: `${__dirname}/preview/lib/index.js`,
+    debug: true,
+    paths: [`${__dirname}/../node_modules`],
+  });
 
-gulp.task('lib:watch', () => {
-  const files = [`${__dirname}/src/**/*.es`];
-  watch(files, triggerTaskAction('lib:compile'));
-});
-
-gulp.task('lib:build', (done) => {
-  sequence(
-    'lib:clean',
-    'lib:compile',
-    done,
-  );
-});
-
-// Preview Tasks
-gulp.task('preview:clean', () => del([`${__dirname}/preview/assets`]));
-
-gulp.task('preview:bundle', (done) => {
-  bundle({
-    name: 'app.js',
-    entries: `${__dirname}/preview/src/index.es`,
-    cacheFile: `${__dirname}/bundle-cache.json`,
-    dest: `${__dirname}/preview/assets`,
-    debug: process.env.NODE_ENV !== 'production',
-  }, done);
-});
-
-gulp.task('preview:watch', () => {
-  const files = [`${__dirname}/preview/src/**/*.es`, `${__dirname}/lib/**/*.js`];
-  watch(files, triggerTaskAction('preview:bundle'));
-});
-
-// Development
+  const stream = instance.bundle().pipe(destStream);
+  stream.on('error', (err) => console.error(err.stack || err));
+  stream.on('finish', done);
+};
 
 gulp.task('default', () => {
-  sequence(
-    ['lib:clean', 'preview:clean'],
-    'lib:compile',
-    'preview:bundle',
-    ['lib:watch', 'preview:watch'],
-  );
+  const files = [
+    `${__dirname}/preview/lib/**/*.js`,
+    `${__dirname}/lib/**/*.js`,
+  ];
+
+  gulp.watch(files, bundle);
 });
