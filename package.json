@@ -3,11 +3,12 @@
   "version": "0.4.0",
   "description": "React Form Components",
   "scripts": {
-    "lint": "eslint --ext .es,.js --ignore-path .eslintignore --format codeframe ./",
     "prepublishOnly": "npm run build",
-    "build": "NODE_ENV=production gulp lib:build",
-    "start": "gulp & node ./preview/server.js",
-    "test": "npm run build && mocha \"test/**/*.js\""
+    "build": "NODE_ENV=production babel src --out-dir lib --copy-files",
+    "preview": "babel preview/src --out-dir preview/lib --copy-files",
+    "start": "npm run build -- --watch & npm run preview -- --watch & gulp & node ./preview/server.js",
+    "test": "npm run build && mocha \"test/**/*.js\"",
+    "lint": "eslint --ext .es,.js --ignore-path .eslintignore --format codeframe ./"
   },
   "repository": {
     "type": "git",
@@ -30,58 +31,32 @@
     "node": "^8.x.x"
   },
   "devDependencies": {
-    "babel-core": "6.26.3",
-    "babel-plugin-syntax-trailing-function-commas": "6.22.0",
-    "babel-plugin-transform-node-env-inline": "0.4.3",
-    "babel-plugin-transform-object-rest-spread": "6.26.0",
-    "babel-plugin-transform-react-constant-elements": "6.23.0",
-    "babel-plugin-transform-react-inline-elements": "6.22.0",
-    "babel-plugin-transform-react-jsx-self": "6.22.0",
-    "babel-plugin-transform-react-remove-prop-types": "0.4.13",
+    "babel-cli": "^6.26.0",
     "babel-plugin-transform-runtime": "6.23.0",
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
-    "babelify": "8.0.0",
+    "babel-preset-stage-3": "6.24.1",
     "browserify": "16.2.2",
-    "browserify-incremental": "3.1.1",
     "chai": "^4.1.2",
     "connect-livereload": "0.6.0",
-    "del": "3.0.0",
     "eslint": "^5.1.0",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.10.0",
     "express": "4.16.3",
-    "gulp": "3.9.1",
-    "gulp-babel": "7.0.1",
-    "gulp-watch": "5.0.0",
+    "gulp": "^4.0.0",
     "livereload": "0.7.0",
     "memoize-one": "^4.0.0",
     "mocha": "^5.2.0",
     "prop-types": "^15.6.2",
     "pump": "3.0.0",
     "react": "16.4.1",
-    "react-dom": "16.4.1",
-    "react-router-dom": "4.3.1",
-    "run-sequence": "2.2.1",
-    "vinyl-source-stream": "2.0.0"
+    "react-dom": "16.4.1"
   },
   "peerDependencies": {
     "react": "^16.4.x",
     "prop-types": "^15.6.x",
     "memoize-one": "^4.x.x"
-  },
-  "browserify": {
-    "transform": [
-      [
-        "babelify",
-        {
-          "extensions": [
-            ".es"
-          ]
-        }
-      ]
-    ]
   }
 }
