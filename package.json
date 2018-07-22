@@ -17,9 +17,12 @@
   "keywords": [
     "react",
     "form",
-    "input",
-    "select",
-    "checkbox"
+    "react-form",
+    "form-react",
+    "react-input",
+    "react-select",
+    "react-checkbox",
+    "react-radio"
   ],
   "author": "Abylay Keldibek <atomio.ak@gmail.com>",
   "license": "MIT",
