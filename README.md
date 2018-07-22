@@ -34,7 +34,7 @@ const App = () => (
 import Form from 'ornament-form-kit/lib/form';
 ```
 
-- Main component. It stores model and changes it.
+- Main component. It stores model and updates it.
 - Every control should be placed inside it.
 - If form is locked then all children controls are locked.
 
@@ -60,7 +60,7 @@ Properties:
       },
     };
    ```
-* **children**: function, node; If function is passsed then it takes form api as an argument. More about form api in "form connect" section
+* **children**: function, node; If function is passsed then it takes form api as an argument. More about form api in ["form connect" section](#form-connect-hoc)
 * **onSubmit**: function; Native form submit event. Takes native event as argument
 * **onValidSubmit**: function; Called when validation was passed. Takes model as argument
 * **onInvalidSubmit**: function;  Called when validation wasn't passed
@@ -89,7 +89,7 @@ import Select from 'ornament-form-kit/lib/select';
 
 Properties:
 * **field**: string; Model field name
-* **options**: array; Array of option objects. Each have value and content properties
+* **options**: array; Array of option objects. Each has value and content properties
   * **value**: any;
    * **content**: any;
 
@@ -108,7 +108,7 @@ import RadioGroup from 'ornament-form-kit/lib/radio_group';
 
 Properties:
 * **field**: string; Model field name
-* **options**: array; Array of option objects. Each have value and content properties
+* **options**: array; Array of option objects. Each has value and content properties
   * **value**: any;
    * **content**: any;
 * **itemClassName**: string; Each `<input type="radio">` is wrapped in span. You can pass css class name for it
