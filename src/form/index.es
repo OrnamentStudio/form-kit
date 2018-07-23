@@ -10,7 +10,7 @@ class Form extends PureComponent {
     super(props);
 
     this.state = {
-      model: props.defaultModel,
+      model: { ...props.defaultModel },
       errors: {},
     };
 
@@ -98,7 +98,6 @@ class Form extends PureComponent {
 
 Form.defaultProps = {
   locked: false,
-  defaultModel: {},
   validation: {},
 };
 
@@ -109,7 +108,7 @@ Form.propTypes = {
   ]),
 
   locked: PropTypes.bool.isRequired,
-  defaultModel: PropTypes.object.isRequired,
+  defaultModel: PropTypes.object,
   validation: PropTypes.object.isRequired,
 
   onSubmit: PropTypes.func,
