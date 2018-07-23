@@ -1,6 +1,6 @@
 {
   "name": "ornament-form-kit",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "React Form Components",
   "scripts": {
     "prepublishOnly": "npm run build",
