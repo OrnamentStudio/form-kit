@@ -22,5 +22,4 @@ node_modules/*
 
 # Build
 lib/
-bundle-cache.json
 preview/assets/
