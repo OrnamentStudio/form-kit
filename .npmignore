@@ -6,3 +6,4 @@ src/
 .eslintrc
 .gitignore
 .npmignore
+gulpfile.js
