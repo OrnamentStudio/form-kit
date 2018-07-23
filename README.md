@@ -114,6 +114,13 @@ Properties:
 * **itemClassName**: string; Each `<input type="radio">` is wrapped in span. You can pass css class name for it
 * **contentClassName**: string; Each radio content is wrapped in span. You can pass css class name for it
 
+### Submit
+```js
+import RadioGroup from 'ornament-form-kit/lib/submit';
+```
+
+Disabled if parent form is locked
+
 ## Form connect HOC
 ```js
 import connect from 'ornament-form-kit/lib/form_connect';
@@ -127,7 +134,7 @@ import connect from 'ornament-form-kit/lib/form_connect';
 
 
 const MyComponent = connect(({ form }) => {
-  // ... do smth with form api 
+  // ... do smth with form api
 });
 ```
 

@@ -5,6 +5,7 @@ import Textarea from '../../lib/textarea';
 import Select from '../../lib/select';
 import Checkbox from '../../lib/checkbox';
 import RadioGroup from '../../lib/radio_group';
+import Submit from '../../lib/submit';
 
 
 const defaultModel = {
@@ -82,7 +83,7 @@ class App extends PureComponent {
         <p><Select field="sex" options={sexOptions} /></p>
         <p><Checkbox field="married" /></p>
         <p><RadioGroup field="age" options={ageOptions} /></p>
-        <p><button type="submit">Submit</button></p>
+        <p><Submit>Submit</Submit></p>
       </Fragment>
     );
 
@@ -131,7 +132,7 @@ class App extends PureComponent {
                   {errors.sex ? <strong>{errors.sex}</strong> : null}
                 </p>
                 <p>
-                  <button type="submit">Submit</button>
+                  <Submit>Submit</Submit>
                   <button type="button" onClick={this.setCustomErrors}>Set Custom errors</button>
                 </p>
               </Fragment>
@@ -158,7 +159,7 @@ class App extends PureComponent {
                 <p><RadioGroup field="radio_group" options={ageOptions} /></p>
                 <p><Checkbox field="checkbox" /></p>
                 <p>
-                  <button type="submit">Submit</button>
+                  <Submit>Submit</Submit>
                   <button type="button" onClick={this.toggleLock}>Toggle Lock</button>
                 </p>
               </Fragment>
