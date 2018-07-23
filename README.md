@@ -116,7 +116,7 @@ Properties:
 
 ### Submit
 ```js
-import RadioGroup from 'ornament-form-kit/lib/submit';
+import Submit from 'ornament-form-kit/lib/submit';
 ```
 
 Disabled if parent form is locked
