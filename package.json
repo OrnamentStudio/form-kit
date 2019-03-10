@@ -34,31 +34,35 @@
     "node": "^8.x.x"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-runtime": "6.23.0",
-    "babel-preset-env": "1.7.0",
-    "babel-preset-react": "6.24.1",
-    "babel-preset-stage-3": "6.24.1",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-transform-runtime": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/runtime": "^7.0.0",
     "browserify": "^16.2.3",
     "chai": "^4.2.0",
-    "connect-livereload": "0.6.0",
-    "eslint": "^5.7.0",
+    "connect-livereload": "^0.6.1",
+    "eslint": "^5.15.1",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
     "express": "^4.16.4",
     "gulp": "^4.0.0",
     "livereload": "0.7.0",
-    "memoize-one": "^4.0.2",
-    "mocha": "^5.2.0",
-    "prop-types": "^15.6.2",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2"
+    "memoize-one": "^5.0.0",
+    "mocha": "^6.0.2",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
   },
   "peerDependencies": {
     "react": "^16.x.x",
     "prop-types": "^15.x.x",
     "memoize-one": "^4.x.x"
+  },
+  "dependencies": {
+    "marked": "^0.6.1"
   }
 }
