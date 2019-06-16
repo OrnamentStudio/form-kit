@@ -169,7 +169,7 @@ Disabled if parent form is locked
 const connect = require('ornament-form-kit/connect');
 ```
 
-It is possible to write own controls and components. By wrapping component by `form_connect` form api is passed as extra prop.
+It is possible to write own controls and components. By wrapping component by `connect` form api is passed as extra prop.
 
 ### Example
 ```jsx
