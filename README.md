@@ -13,12 +13,12 @@ npm install react // v16.x.x
 npm install prop-types // v15.x.x
 ```
 
+This module targets Node.js 8 or later and the latest version of Chrome, Firefox, and Safari. If you want support for older browsers use [Babel compiler](https://babeljs.io/).
+
 ## Example Usage
 
 ```jsx
-import Form from 'ornament-form-kit/lib/form';
-import Text from 'ornament-form-kit/lib/text';
-import Select from 'ornament-form-kit/lib/select';
+const { Form, Text, Select } = require('ornament-form-kit');
 
 
 const App = () => (
@@ -38,7 +38,7 @@ const App = () => (
 ### Form
 
 ```js
-import Form from 'ornament-form-kit/lib/form';
+const Form = require('ornament-form-kit/form');
 ```
 
 - Main component. It stores model and updates it.
@@ -74,7 +74,7 @@ Properties:
 
 ### Text
 ```js
-import Text from 'ornament-form-kit/lib/text';
+const Text = require('ornament-form-kit/text');
 ```
 
 Properties:
@@ -83,7 +83,7 @@ Properties:
 
 ### Textarea
 ```js
-import Textarea from 'ornament-form-kit/lib/textarea';
+const Textarea = require('ornament-form-kit/textarea');
 ```
 
 Properties:
@@ -91,7 +91,7 @@ Properties:
 
 ### Select
 ```js
-import Select from 'ornament-form-kit/lib/select';
+const Select = require('ornament-form-kit/select');
 ```
 
 Properties:
@@ -102,7 +102,7 @@ Properties:
 
 ### Checkbox
 ```js
-import Checkbox from 'ornament-form-kit/lib/checkbox';
+const Checkbox = require('ornament-form-kit/checkbox');
 ```
 
 Properties:
@@ -110,7 +110,7 @@ Properties:
 
 ### RadioGroup
 ```js
-import RadioGroup from 'ornament-form-kit/lib/radio_group';
+const RadioGroup = require('ornament-form-kit/radio_group');
 ```
 
 Properties:
@@ -123,21 +123,21 @@ Properties:
 
 ### Submit
 ```js
-import Submit from 'ornament-form-kit/lib/submit';
+const Submit = require('ornament-form-kit/submit');
 ```
 
 Disabled if parent form is locked
 
 ## Form connect HOC
 ```js
-import connect from 'ornament-form-kit/lib/form_connect';
+const connect = require('ornament-form-kit/connect');
 ```
 
 It is possible to write own controls and components. By wrapping component by `form_connect` form api is passed as extra prop.
 
 ### Example
 ```jsx
-import connect from 'ornament-form-kit/lib/form_connect';
+const connect = require('ornament-form-kit/connect');
 
 
 const MyComponent = connect(({ form }) => {

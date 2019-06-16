@@ -1,8 +1,10 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import memoize from 'memoize-one';
-import { Provider } from '../form_context';
-import { getErrors, hasErrors, invoke } from './utils';
+const React = require('react');
+const PropTypes = require('prop-types');
+const memoize = require('memoize-one').default;
+const { Provider } = require('./context');
+const { getErrors, hasErrors, noop } = require('./utils');
+
+const { PureComponent, createElement: e } = React;
 
 
 class Form extends PureComponent {
@@ -58,9 +60,9 @@ class Form extends PureComponent {
 
     this.setErrors(errors);
 
-    invoke(onSubmit, event);
-    if (hasErrors(errors)) invoke(onInvalidSubmit);
-    else invoke(onValidSubmit, model);
+    onSubmit(event);
+    if (hasErrors(errors)) onInvalidSubmit();
+    else onValidSubmit(model);
   }
 
   render() {
@@ -75,7 +77,7 @@ class Form extends PureComponent {
       onValidSubmit,
       onInvalidSubmit,
 
-      ...cleanProps
+      ...rest
     } = this.props;
 
     const {
@@ -86,19 +88,21 @@ class Form extends PureComponent {
     const api = this.getAPI(model, errors, locked);
     const content = typeof children === 'function' ? children(api) : children;
 
-    return (
-      <form {...cleanProps} onSubmit={this.handleSubmit}>
-        <Provider value={api}>
-          {content}
-        </Provider>
-      </form>
-    );
+    const provider = e(Provider, { value: api }, content);
+    return e('form', { ...rest, onSubmit: this.handleSubmit }, provider);
   }
 }
 
 Form.defaultProps = {
+  children: null,
+
   locked: false,
+  defaultModel: {},
   validation: {},
+
+  onSubmit: noop,
+  onValidSubmit: noop,
+  onInvalidSubmit: noop,
 };
 
 Form.propTypes = {
@@ -107,13 +111,22 @@ Form.propTypes = {
     PropTypes.node,
   ]),
 
-  locked: PropTypes.bool.isRequired,
-  defaultModel: PropTypes.object,
-  validation: PropTypes.object.isRequired,
+  locked: PropTypes.bool,
+  defaultModel: PropTypes.objectOf(
+    PropTypes.any,
+  ),
+
+  validation: PropTypes.objectOf(
+    PropTypes.shape({
+      required: PropTypes.bool,
+      validate: PropTypes.arrayOf(PropTypes.func),
+      message: PropTypes.string.isRequired,
+    }),
+  ),
 
   onSubmit: PropTypes.func,
   onValidSubmit: PropTypes.func,
   onInvalidSubmit: PropTypes.func,
 };
 
-export default Form;
+module.exports = Form;
