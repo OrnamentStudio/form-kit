@@ -15,7 +15,7 @@ npm install prop-types // v15.x.x
 
 This module targets Node.js 8 or later and the latest version of Chrome, Firefox, and Safari. If you want support for older browsers use [Babel compiler](https://babeljs.io/).
 
-## Example Usage
+## Usage
 
 ```jsx
 const { Form, Text, Select } = require('ornament-form-kit');

@@ -2,14 +2,15 @@
 
 const React = require('react');
 const { render } = require('react-dom');
-
-const Form = require('../form');
-const Text = require('../text');
-const Textarea = require('../textarea');
-const Select = require('../select');
-const Checkbox = require('../checkbox');
-const RadioGroup = require('../radio_group');
-const Submit = require('../submit');
+const {
+  Form,
+  Text,
+  Textarea,
+  Checkbox,
+  Select,
+  RadioGroup,
+  Submit,
+} = require('../index');
 
 const { PureComponent, Fragment, createRef } = React;
 
