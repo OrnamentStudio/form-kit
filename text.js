@@ -1,7 +1,9 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import connect from '../form_connect';
-import { getValue } from '../form/utils';
+const React = require('react');
+const PropTypes = require('prop-types');
+const connect = require('./connect');
+const { getValue, getPropTypeForm } = require('./utils');
+
+const { PureComponent, createElement: e } = React;
 
 
 const TYPES = [
@@ -32,18 +34,24 @@ class Text extends PureComponent {
   }
 
   render() {
-    const { form, field, type, ...cleanProps } = this.props;
+    const {
+      form,
+      field,
+      type,
+      ...rest
+    } = this.props;
+
     const value = getValue(form, field);
 
-    return (
-      <input
-        {...cleanProps}
-        type={type}
-        value={value}
-        name={field}
-        onChange={this.handleChange}
-      />
-    );
+    const props = {
+      ...rest,
+      type,
+      value,
+      name: field,
+      onChange: this.handleChange,
+    };
+
+    return e('input', props);
   }
 }
 
@@ -52,9 +60,9 @@ Text.defaultProps = {
 };
 
 Text.propTypes = {
-  type: PropTypes.oneOf(TYPES).isRequired,
-  form: PropTypes.object.isRequired,
+  type: PropTypes.oneOf(TYPES),
+  form: getPropTypeForm().isRequired,
   field: PropTypes.string.isRequired,
 };
 
-export default connect(Text);
+module.exports = connect(Text);

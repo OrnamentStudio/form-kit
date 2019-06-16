@@ -1,11 +1,17 @@
-import React, { PureComponent, Fragment, createRef } from 'react';
-import Form from '../../lib/form';
-import Text from '../../lib/text';
-import Textarea from '../../lib/textarea';
-import Select from '../../lib/select';
-import Checkbox from '../../lib/checkbox';
-import RadioGroup from '../../lib/radio_group';
-import Submit from '../../lib/submit';
+/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] no-console: 0 */
+
+const React = require('react');
+const { render } = require('react-dom');
+
+const Form = require('../form');
+const Text = require('../text');
+const Textarea = require('../textarea');
+const Select = require('../select');
+const Checkbox = require('../checkbox');
+const RadioGroup = require('../radio_group');
+const Submit = require('../submit');
+
+const { PureComponent, Fragment, createRef } = React;
 
 
 const defaultModel = {
@@ -20,13 +26,13 @@ const defaultModel = {
 const validation = {
   firstname: {
     required: true,
-    validate: [(value) => value.length > 5],
+    validate: [value => value.length > 5],
     message: 'Wrong name format',
   },
 
   about: {
-    validate: [(value) => value.length > 20],
-    message: 'About should be longer',
+    validate: [value => value.length > 20],
+    message: 'Description should be longer',
   },
 
   sex: {
@@ -47,9 +53,9 @@ const ageOptions = [
   { value: 3, content: '40+' },
 ];
 
-const handleValidSubmit = (model) => console.warn('Submit Success!', model);
+const handleValidSubmit = model => console.warn('Submit Success!', model);
 const handleInvalidSubmit = () => console.error('Submit Error!');
-const handleSubmit = (event) => console.warn('Native Event', event);
+const handleSubmit = event => console.warn('Native Event', event);
 
 class App extends PureComponent {
   constructor(props) {
@@ -81,7 +87,10 @@ class App extends PureComponent {
         <p><Text field="email" type="email" /></p>
         <p><Textarea field="about" /></p>
         <p><Select field="sex" options={sexOptions} /></p>
-        <p><Checkbox field="married" /></p>
+        <p>
+          <Checkbox field="married" />
+          Married
+        </p>
         <p><RadioGroup field="age" options={ageOptions} /></p>
         <p><Submit>Submit</Submit></p>
       </Fragment>
@@ -97,16 +106,12 @@ class App extends PureComponent {
           </Form>
         </section>
 
-        <hr />
-
         <section>
           <h2>Prefilled Data</h2>
           <Form defaultModel={defaultModel} onValidSubmit={handleValidSubmit}>
             {personForm}
           </Form>
         </section>
-
-        <hr />
 
         <section>
           <h2>Form with validation</h2>
@@ -140,8 +145,6 @@ class App extends PureComponent {
           </Form>
         </section>
 
-        <hr />
-
         <section>
           <h2>Locked Form</h2>
           <Form
@@ -157,7 +160,10 @@ class App extends PureComponent {
                 <p><Textarea field="textarea" /></p>
                 <p><Select field="select" options={sexOptions} /></p>
                 <p><RadioGroup field="radio_group" options={ageOptions} /></p>
-                <p><Checkbox field="checkbox" /></p>
+                <p>
+                  <Checkbox field="checkbox" />
+                  Checkbox
+                </p>
                 <p>
                   <Submit>Submit</Submit>
                   <button type="button" onClick={this.toggleLock}>Toggle Lock</button>
@@ -171,4 +177,4 @@ class App extends PureComponent {
   }
 }
 
-export default App;
+render(<App />, global.document.getElementById('root'));

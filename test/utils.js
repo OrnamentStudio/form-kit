@@ -5,11 +5,10 @@ const {
   getValue,
   getErrors,
   hasErrors,
-  invoke,
-} = require('../../lib/form/utils');
+} = require('../utils');
 
 
-describe('form/utils', () => {
+describe('utils', () => {
   it('isFilled', () => {
     const truely = [
       ' ',
@@ -31,8 +30,8 @@ describe('form/utils', () => {
       false,
     ];
 
-    truely.forEach((value) => assert.isTrue(isFilled(value), 'filled value'));
-    falsely.forEach((value) => assert.isFalse(isFilled(value), 'empty value'));
+    truely.forEach(value => assert.isTrue(isFilled(value), 'filled value'));
+    falsely.forEach(value => assert.isFalse(isFilled(value), 'empty value'));
   });
 
   it('getValue', () => {
@@ -83,13 +82,13 @@ describe('form/utils', () => {
       const validation = {
         filled: {
           validate: [
-            (value) => value.length > 2,
-            (value) => value.length < 5,
+            value => value.length > 2,
+            value => value.length < 5,
           ],
           message: true,
         },
         empty: {
-          validate: [(value) => value.length === 0],
+          validate: [value => value.length === 0],
           message: true,
         },
       };
@@ -106,7 +105,7 @@ describe('form/utils', () => {
 
       const validation = {
         empty: {
-          validate: [(value) => value.length > 2],
+          validate: [value => value.length > 2],
           message: true,
         },
       };
@@ -119,14 +118,5 @@ describe('form/utils', () => {
     assert.isFalse(hasErrors(null), 'pass null');
     assert.isFalse(hasErrors({}), 'pass empty object');
     assert.isTrue(hasErrors({ a: true }), 'errors');
-  });
-
-  it('invoke', () => {
-    let a = 0;
-    const func = (newValue) => { a = newValue; };
-
-    invoke(func, 1);
-    assert.equal(a, 1, 'call function with passing args');
-    assert.doesNotThrow(invoke, 'not function');
   });
 });
