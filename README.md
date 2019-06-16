@@ -15,20 +15,70 @@ npm install prop-types // v15.x.x
 
 This module targets Node.js 8 or later and the latest version of Chrome, Firefox, and Safari. If you want support for older browsers use [Babel compiler](https://babeljs.io/).
 
-## Example Usage
+## Usage
+
+Include:
+
+```js
+const { Form, Text } = require('ornament-form-kit');
+const Form = require('ornament-form-kit/form');
+const Text = require('ornament-form-kit/text');
+```
+
+Full example:
 
 ```jsx
-const { Form, Text, Select } = require('ornament-form-kit');
+const {
+  Form,
+  Submit,
 
+  Text,
+  Textarea,
+  Select,
+  RadioGroup,
+  Checkbox,
+} = require('ornament-form-kit');
+
+
+// Validation scheme
+const personValidation = {
+  firstname: {
+    required: true,
+    validate: [value => value.length > 5],
+    message: 'Wrong name format',
+  },
+
+  sex: {
+    required: true,
+    message: 'Sex is required',
+  },
+};
 
 const App = () => (
   <Form
+    {/* Pre-fills form with default data */}
     defaultModel={personModel}
+
+    {/* Validation scheme */}
     validation={personValidation}
+
+    {/* Native event, takes event as argument */}
+    onSubmit={handleSubmit}
+
+    {/* Validation was passed, takes model as argument */}
     onValidSubmit={handleValidSubmit}
+
+    {/* Validation wasn't passed */}
+    onInvalidSubmit={handleInvalidSubmit}
   >
-    <Text field="name" />
-    <Select field="gender" options={genderOptions} />
+    {/* field is model key */}
+    <Text field="firstname" />
+    <Textarea field="description" />
+    <Checkbox field="married" />
+
+    {/* options: array of { value, content } objects */}
+    <Select field="gender" options={options} />
+    <RadioGroup field="age" options={options} />
   </Form>
 );
 ```
@@ -48,26 +98,12 @@ const Form = require('ornament-form-kit/form');
 Properties:
 * **locked**: boolean; Locks form submit and model update
 * **defaultModel**: object;
-* **validation**: object; Validation rules, each key matches model field
+* **validation**: object; Validation scheme, each key matches model field
   * **field key**: object; Rules description
     * **required**: bool;
     * **message**: string; Error message
     * **validate**: array; Array of functions that validate field. Each function takes 2 arguments - value, model
-  * Example
-   ```
-    const validation = {
-      name: {
-        validate: [(value) => value.length > 5],
-        message: 'wrong name format',
-      },
-
-      gender: {
-        required: true,
-        message: 'gender is required',
-      },
-    };
-   ```
-* **children**: function, node; If function is passsed then it takes form api as an argument. More about form api in ["form connect" section](#form-connect-hoc)
+* **children**: function, node; If function is passed then it takes form api as an argument. More about form api in ["form connect" section](#form-connect-hoc)
 * **onSubmit**: function; Native form submit event. Takes native event as argument
 * **onValidSubmit**: function; Called when validation was passed. Takes model as argument
 * **onInvalidSubmit**: function;  Called when validation wasn't passed
@@ -133,7 +169,7 @@ Disabled if parent form is locked
 const connect = require('ornament-form-kit/connect');
 ```
 
-It is possible to write own controls and components. By wrapping component by `form_connect` form api is passed as extra prop.
+It is possible to write own controls and components. By wrapping component by `connect` form api is passed as extra prop.
 
 ### Example
 ```jsx
