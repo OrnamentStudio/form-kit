@@ -1,4 +1,4 @@
-# React Form Kit
+# React Form Kit [![Build Status](https://travis-ci.org/OrnamentStudio/form-kit.svg?branch=master)](https://travis-ci.org/OrnamentStudio/form-kit)
 
 ## Install
 
