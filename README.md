@@ -96,17 +96,13 @@ const Form = require('ornament-form-kit/form');
 - If form is locked then all children controls are locked.
 
 Properties:
-* **locked**: boolean; Locks form submit and model update
-* **defaultModel**: object;
-* **validation**: object; Validation scheme, each key matches model field
-  * **field key**: object; Rules description
-    * **required**: bool;
-    * **message**: string; Error message
-    * **validate**: array; Array of functions that validate field. Each function takes 2 arguments - value, model
-* **children**: function, node; If function is passed then it takes form api as an argument. More about form api in ["form connect" section](#form-connect-hoc)
-* **onSubmit**: function; Native form submit event. Takes native event as argument
-* **onValidSubmit**: function; Called when validation was passed. Takes model as argument
-* **onInvalidSubmit**: function;  Called when validation wasn't passed
+* **locked**: `boolean` Locks form submit and model update
+* **defaultModel**: `object` Object to pre-fill form
+* **validation**: `object` Validation scheme
+* **children**: `function` `node` If function is passed then it takes form api as an argument. More about form api in ["form connect" section](#form-connect-hoc)
+* **onSubmit**: `function` Native form submit event. Takes native event as argument
+* **onValidSubmit**: `function` Called when validation was passed. Takes model as argument
+* **onInvalidSubmit**: `function` Called when validation wasn't passed
 
 ### Text
 ```js
@@ -114,8 +110,8 @@ const Text = require('ornament-form-kit/text');
 ```
 
 Properties:
-* **field**: string; Model field name
-* **type**: string; Input "type" attribute
+* **field**: `string` Model field name
+* **type**: `string` Input "type" attribute
 
 ### Textarea
 ```js
@@ -123,7 +119,7 @@ const Textarea = require('ornament-form-kit/textarea');
 ```
 
 Properties:
-* **field**: string; Model field name
+* **field**: `string` Model field name
 
 ### Select
 ```js
@@ -131,10 +127,8 @@ const Select = require('ornament-form-kit/select');
 ```
 
 Properties:
-* **field**: string; Model field name
-* **options**: array; Array of option objects. Each has value and content properties
-  * **value**: any;
-   * **content**: any;
+* **field**: `string` Model field name
+* **options**: `array` Array of `{ value, content }` objects
 
 ### Checkbox
 ```js
@@ -142,7 +136,7 @@ const Checkbox = require('ornament-form-kit/checkbox');
 ```
 
 Properties:
-* **field**: string; Model field name
+* **field**: `string` Model field name
 
 ### RadioGroup
 ```js
@@ -150,12 +144,10 @@ const RadioGroup = require('ornament-form-kit/radio_group');
 ```
 
 Properties:
-* **field**: string; Model field name
-* **options**: array; Array of option objects. Each has value and content properties
-  * **value**: any;
-   * **content**: any;
-* **itemClassName**: string; Each `<input type="radio">` is wrapped in span. You can pass css class name for it
-* **contentClassName**: string; Each radio content is wrapped in span. You can pass css class name for it
+* **field**: `string` Model field name
+* **options**: `array` Array of `{ value, content }` objects
+* **itemClassName**: `string` Each `<input type="radio">` is wrapped in span. You can pass css class name for it
+* **contentClassName**: `string` Each radio content is wrapped in span. You can pass css class name for it
 
 ### Submit
 ```js
@@ -182,10 +174,10 @@ const MyComponent = connect(({ form }) => {
 ```
 
 ### Form api
-* **locked**: bool; Is form locked or not
-* **model**: object; Form model
-* **errors**: object; Errors object. Each key corresponds to model field and contains error messages that was passed to validation
-* **updateField**: function; Takes 2 params - field name and new value
+* **locked**: `bool` Is form locked or not
+* **model**: `object` Form model
+* **errors**: `object` Errors object. Each key corresponds to model field and contains error messages that was passed to validation
+* **updateField**: `function` Takes 2 params - field name and new value
 
 
 
