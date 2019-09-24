@@ -34,7 +34,7 @@ exports.getErrors = (model, validation) => {
     if (required && !hasValue) hasError = true;
 
     if (!hasError && hasValue && validate) {
-      const iterator = check => !check(value, model);
+      const iterator = (check) => !check(value, model);
       hasError = validate.some(iterator);
     }
 
@@ -44,7 +44,7 @@ exports.getErrors = (model, validation) => {
   return Object.keys(validation).reduce(collect, {});
 };
 
-exports.hasErrors = errors => Boolean(errors && Object.keys(errors).length);
+exports.hasErrors = (errors) => Boolean(errors && Object.keys(errors).length);
 
 exports.getPropTypeForm = () => PropTypes.shape({
   locked: PropTypes.bool.isRequired,

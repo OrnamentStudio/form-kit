@@ -30,8 +30,8 @@ describe('utils', () => {
       false,
     ];
 
-    truely.forEach(value => assert.isTrue(isFilled(value), 'filled value'));
-    falsely.forEach(value => assert.isFalse(isFilled(value), 'empty value'));
+    truely.forEach((value) => assert.isTrue(isFilled(value), 'filled value'));
+    falsely.forEach((value) => assert.isFalse(isFilled(value), 'empty value'));
   });
 
   it('getValue', () => {
@@ -82,13 +82,13 @@ describe('utils', () => {
       const validation = {
         filled: {
           validate: [
-            value => value.length > 2,
-            value => value.length < 5,
+            (value) => value.length > 2,
+            (value) => value.length < 5,
           ],
           message: true,
         },
         empty: {
-          validate: [value => value.length === 0],
+          validate: [(value) => value.length === 0],
           message: true,
         },
       };
@@ -105,7 +105,7 @@ describe('utils', () => {
 
       const validation = {
         empty: {
-          validate: [value => value.length > 2],
+          validate: [(value) => value.length > 2],
           message: true,
         },
       };
