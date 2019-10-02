@@ -1,6 +1,6 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const memoize = require('memoize-one').default;
+const memoize = require('memoize-one');
 const { Provider } = require('./context');
 const { getErrors, hasErrors, noop } = require('./utils');
 

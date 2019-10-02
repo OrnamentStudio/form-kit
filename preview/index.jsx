@@ -12,7 +12,7 @@ const {
   Submit,
 } = require('../index');
 
-const { PureComponent, Fragment, createRef } = React;
+const { PureComponent, createRef } = React;
 
 
 const defaultModel = {
@@ -27,12 +27,12 @@ const defaultModel = {
 const validation = {
   firstname: {
     required: true,
-    validate: [value => value.length > 5],
+    validate: [(value) => value.length > 5],
     message: 'Wrong name format',
   },
 
   about: {
-    validate: [value => value.length > 20],
+    validate: [(value) => value.length > 20],
     message: 'Description should be longer',
   },
 
@@ -54,9 +54,9 @@ const ageOptions = [
   { value: 3, content: '40+' },
 ];
 
-const handleValidSubmit = model => console.warn('Submit Success!', model);
+const handleValidSubmit = (model) => console.warn('Submit Success!', model);
 const handleInvalidSubmit = () => console.error('Submit Error!');
-const handleSubmit = event => console.warn('Native Event', event);
+const handleSubmit = (event) => console.warn('Native Event', event);
 
 class App extends PureComponent {
   constructor(props) {
@@ -83,7 +83,7 @@ class App extends PureComponent {
     const { isLocked } = this.state;
 
     const personForm = (
-      <Fragment>
+      <>
         <p><Text field="firstname" /></p>
         <p><Text field="email" type="email" /></p>
         <p><Textarea field="about" /></p>
@@ -94,7 +94,7 @@ class App extends PureComponent {
         </p>
         <p><RadioGroup field="age" options={ageOptions} /></p>
         <p><Submit>Submit</Submit></p>
-      </Fragment>
+      </>
     );
 
     return (
@@ -124,7 +124,7 @@ class App extends PureComponent {
             ref={this.errorForm}
           >
             {({ errors }) => (
-              <Fragment>
+              <>
                 <p>
                   <Text field="firstname" />
                   {errors.firstname ? <strong>{errors.firstname}</strong> : null}
@@ -141,7 +141,7 @@ class App extends PureComponent {
                   <Submit>Submit</Submit>
                   <button type="button" onClick={this.setCustomErrors}>Set Custom errors</button>
                 </p>
-              </Fragment>
+              </>
             )}
           </Form>
         </section>
@@ -155,7 +155,7 @@ class App extends PureComponent {
             onInvalidSubmit={handleInvalidSubmit}
           >
             {({ locked }) => (
-              <Fragment>
+              <>
                 <p>{locked ? 'Locked' : 'Unlocked'}</p>
                 <p><Text field="text" /></p>
                 <p><Textarea field="textarea" /></p>
@@ -169,7 +169,7 @@ class App extends PureComponent {
                   <Submit>Submit</Submit>
                   <button type="button" onClick={this.toggleLock}>Toggle Lock</button>
                 </p>
-              </Fragment>
+              </>
             )}
           </Form>
         </section>

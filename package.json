@@ -7,7 +7,7 @@
     "start": "webpack-dev-server",
     "test": "npm run lint && npm run mocha",
     "mocha": "mocha",
-    "lint": "eslint --format codeframe ./"
+    "lint": "eslint --format codeframe \"./**/*.js\""
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
     "@babel/core": "^7.6.2",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
+    "babel-plugin-add-module-exports": "^1.0.2",
     "chai": "^4.2.0",
     "eslint": "^6.4.0",
     "eslint-config-airbnb": "^18.0.1",
@@ -54,6 +55,6 @@
   "peerDependencies": {
     "react": "^16.x.x",
     "prop-types": "^15.x.x",
-    "memoize-one": "^4.x.x"
+    "memoize-one": "^5.x.x"
   }
 }
