@@ -30,27 +30,29 @@
   },
   "homepage": "https://github.com/OrnamentStudio/reactform-kit#readme",
   "engines": {
-    "node": "^8.x.x"
+    "node": "^12.x.x"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.2",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/core": "^7.7.2",
+    "@babel/preset-react": "^7.7.0",
     "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
-    "eslint": "^6.4.0",
+    "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.14.3",
-    "mocha": "^6.2.0",
+    "eslint-plugin-react": "^7.16.0",
+    "lodash": "^4.17.15",
+    "mocha": "^6.2.2",
     "prop-types": "^15.7.2",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "webpack": "^4.40.2",
-    "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.8.1"
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
   },
   "peerDependencies": {
+    "lodash": "^4.x.x",
     "react": "^16.x.x",
     "prop-types": "^15.x.x"
   },

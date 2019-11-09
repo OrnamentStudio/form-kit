@@ -61,10 +61,20 @@ const handleSubmit = (event) => console.warn('Native Event', event);
 class App extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = { isLocked: true };
+    this.state = {
+      isLocked: true,
+      validateOnUpdate: false,
+    };
+
     this.toggleLock = this.toggleLock.bind(this);
     this.setCustomErrors = this.setCustomErrors.bind(this);
+    this.setValidationOnUpdate = this.setValidationOnUpdate.bind(this);
     this.errorForm = createRef();
+  }
+
+  setValidationOnUpdate() {
+    const update = ({ validateOnUpdate }) => ({ validateOnUpdate: !validateOnUpdate });
+    this.setState(update);
   }
 
   setCustomErrors() {
@@ -80,7 +90,7 @@ class App extends PureComponent {
   }
 
   render() {
-    const { isLocked } = this.state;
+    const { isLocked, validateOnUpdate } = this.state;
 
     const personForm = (
       <>
@@ -118,6 +128,7 @@ class App extends PureComponent {
           <h2>Form with validation</h2>
           <Form
             validation={validation}
+            validateOnUpdate={validateOnUpdate}
             onSubmit={handleSubmit}
             onValidSubmit={handleValidSubmit}
             onInvalidSubmit={handleInvalidSubmit}
@@ -140,6 +151,7 @@ class App extends PureComponent {
                 <p>
                   <Submit>Submit</Submit>
                   <button type="button" onClick={this.setCustomErrors}>Set Custom errors</button>
+                  <button type="button" onClick={this.setValidationOnUpdate}>Set validation on update</button>
                 </p>
               </>
             )}

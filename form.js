@@ -1,6 +1,8 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 const memoize = require('memoize-one/dist/memoize-one.cjs');
+const debounce = require('lodash/debounce');
+
 const { Provider } = require('./context');
 const { getErrors, hasErrors, noop } = require('./utils');
 
@@ -18,7 +20,15 @@ class Form extends PureComponent {
 
     this.getAPI = memoize(this.getAPI);
     this.updateField = this.updateField.bind(this);
+
+    this.validate = this.validate.bind(this);
+    this.debouncedValidate = debounce(this.validate, props.validationRate);
+
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillUnmount() {
+    if (this.debouncedValidate.close) this.debouncedValidate.close();
   }
 
   getAPI(model, errors, locked) {
@@ -27,6 +37,7 @@ class Form extends PureComponent {
       model,
       errors,
       updateField: this.updateField,
+      validate: this.validate,
     };
   }
 
@@ -34,12 +45,30 @@ class Form extends PureComponent {
     this.setState({ errors });
   }
 
-  updateField(field, value) {
-    const { locked } = this.props;
+  updateField(field, value, options = {}) {
+    const { locked, validateOnUpdate } = this.props;
     if (locked) return;
 
-    const update = ({ model }) => ({ model: { ...model, [field]: value } });
-    this.setState(update);
+    let callback;
+    if (validateOnUpdate && !options.silent) {
+      callback = this.debouncedValidate;
+    }
+
+    const update = ({ model }) => ({
+      model: { ...model, [field]: value },
+    });
+
+    this.setState(update, callback);
+  }
+
+  validate() {
+    const { model } = this.state;
+    const { validation } = this.props;
+
+    const errors = getErrors(model, validation);
+    this.setErrors(errors);
+
+    return errors;
   }
 
   handleSubmit(event) {
@@ -47,18 +76,16 @@ class Form extends PureComponent {
 
     const {
       locked,
-      validation,
       onSubmit,
       onValidSubmit,
       onInvalidSubmit,
     } = this.props;
 
+
     if (locked) return;
 
     const { model } = this.state;
-    const errors = getErrors(model, validation);
-
-    this.setErrors(errors);
+    const errors = this.validate();
 
     onSubmit(event);
     if (hasErrors(errors)) onInvalidSubmit();
@@ -71,6 +98,9 @@ class Form extends PureComponent {
 
       locked,
       defaultModel,
+
+      validateOnUpdate,
+      validationRate,
       validation,
 
       onSubmit,
@@ -98,6 +128,9 @@ Form.defaultProps = {
 
   locked: false,
   defaultModel: {},
+
+  validateOnUpdate: false,
+  validationRate: 200,
   validation: {},
 
   onSubmit: noop,
@@ -116,6 +149,8 @@ Form.propTypes = {
     PropTypes.any,
   ),
 
+  validateOnUpdate: PropTypes.bool,
+  validationRate: PropTypes.number,
   validation: PropTypes.objectOf(
     PropTypes.shape({
       required: PropTypes.bool,
