@@ -8,7 +8,7 @@ npm install ornament-form-kit
 
 You also need to install peer dependencies by yourself
 ```
-npm install memoize-one // v4.x.x
+npm install lodash // v4.x.x
 npm install react // v16.x.x
 npm install prop-types // v15.x.x
 ```
