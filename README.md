@@ -62,6 +62,12 @@ const App = () => (
     {/* Validation scheme */}
     validation={personValidation}
 
+    {/* Enable real time validation */}
+    validateOnUpdate
+
+    {/* Override real time validation rate limit, default: 200 */}
+    validationRate={500}
+
     {/* Native event, takes event as argument */}
     onSubmit={handleSubmit}
 
@@ -98,6 +104,8 @@ const Form = require('ornament-form-kit/form');
 Properties:
 * **locked**: `boolean` Locks form submit and model update
 * **defaultModel**: `object` Object to pre-fill form
+* **validateOnUpdate**: `bool` Enable/Disable real time validation
+* **validationRate**: `number` Real time validation rate limit
 * **validation**: `object` Validation scheme
 * **children**: `function` `node` If function is passed then it takes form api as an argument. More about form api in ["form connect" section](#form-connect-hoc)
 * **onSubmit**: `function` Native form submit event. Takes native event as argument
